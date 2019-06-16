@@ -1,0 +1,44 @@
+version: "3.6"
+services:
+  web_loadbalance:
+    image: nginx:${NGINX_VERSION}
+    ports:
+      - "${NGINX_LOADBALANCE_HOST_PORT}:80"
+    volumes:
+      - ${NGINX_LOADBALANCE_CONF_DIR}/nginx.conf:/etc/nginx/nginx.conf
+    restart: always
+    networks:
+      - default
+
+  web_node01:
+    image: nginx:${NGINX_VERSION}
+    ports:
+      - "${NGINX_NODE01_HOST_PORT}:80"
+    volumes:
+      - ${SOURCE_DIR}/node01:/usr/share/nginx/html/:rw
+    restart: always
+    networks:
+      - default
+
+  web_node02:
+    image: nginx:${NGINX_VERSION}
+    ports:
+      - "${NGINX_NODE02_HOST_PORT}:80"
+    volumes:
+      - ${SOURCE_DIR}/node02:/usr/share/nginx/html/:rw
+    restart: always
+    networks:
+      - default
+
+  web_node03:
+    image: nginx:${NGINX_VERSION}
+    ports:
+      - "${NGINX_NODE03_HOST_PORT}:80"
+    volumes:
+      - ${SOURCE_DIR}/node03:/usr/share/nginx/html/:rw
+    restart: always
+    networks:
+      - default
+
+networks:
+  default:
